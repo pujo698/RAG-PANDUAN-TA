@@ -1,24 +1,31 @@
-# 📚 RAG Buku Panduan Tugas Akhir Teknik Informatika UNISSULA
+# RAG Buku Panduan Tugas Akhir Teknik Informatika UNISSULA
 
 Sistem **Retrieval-Augmented Generation (RAG)** berbasis **LangChain**, **ChromaDB**, **Docling**, dan **Ollama** untuk menjawab pertanyaan mengenai **Buku Panduan Tugas Akhir Teknik Informatika Universitas Islam Sultan Agung**.
 
 ---
 
-## 🚀 Fitur
+## KELOMPOK 1 
 
-- 📄 Parsing PDF dengan **Docling** (layout-aware, deteksi heading/tabel/list)
-- ✂️ Chunking 3-tier (heading-based → semantic → recursive fallback)
-- 🏷️ Metadata otomatis (chapter, section, content_type, keywords)
-- 🧠 Embedding **BAAI/bge-m3** (1024 dimensi, multilingual)
-- 💾 Vector database **ChromaDB** (persistent)
-- 🔍 Semantic search + Top-K retrieval
-- 🤖 LLM **Ollama** lokal (llama3 / gemma3 / mistral)
-- 🛡️ Prompt guardrail anti-halusinasi
-- 🖥️ **FastAPI** backend + **Vue 3** frontend
+- [32602300013] - ZAINAL FATTAH
+- [32602300015] - WAHID SANDY PUJO DZULHIJAYANTO
+- [32602300036] - NOVI MUTIARA SARI
+
+## Fitur
+
+- Parsing PDF dengan **Docling** (layout-aware, deteksi heading/tabel/list)
+- Chunking 3-tier (heading-based → semantic → recursive fallback)
+- Metadata otomatis (chapter, section, content_type, keywords)
+- Embedding **BAAI/bge-m3** (1024 dimensi, multilingual)
+- Vector database **ChromaDB** (persistent)
+- Semantic search + Top-K retrieval
+- LLM **Ollama** lokal (llama3 / gemma3 / mistral)
+- Prompt guardrail anti-halusinasi
+- **FastAPI** backend + **Vue 3** frontend
+- **Dashboard Evaluasi** terintegrasi (menampilkan metrik RAGAS dan statistik ingest)
 
 ---
 
-## 🛠️ Tech Stack
+## Tech Stack
 
 | Teknologi            | Fungsi                              |
 |----------------------|-------------------------------------|
@@ -30,10 +37,11 @@ Sistem **Retrieval-Augmented Generation (RAG)** berbasis **LangChain**, **Chroma
 | ChromaDB             | Vector database                     |
 | BAAI/bge-m3          | Embedding model (HuggingFace)       |
 | Ollama               | Local LLM engine                    |
+| Chart.js + vue-chartjs| Visualisasi data untuk Dashboard   |
 
 ---
 
-## 📂 Struktur Proyek
+## Struktur Proyek
 
 ```
 RAG-PANDUAN-TA/
@@ -65,7 +73,7 @@ RAG-PANDUAN-TA/
 
 ---
 
-## ⚙️ Instalasi
+## Instalasi
 
 ### 1. Setup Python Environment
 
@@ -105,7 +113,7 @@ npm install
 
 ---
 
-## ▶️ Menjalankan
+## Menjalankan
 
 ### Terminal 1 — Ollama
 ```bash
@@ -129,7 +137,7 @@ Buka `http://localhost:5173` di browser.
 
 ---
 
-## 🔍 Pipeline RAG
+## Pipeline RAG
 
 ```
 User Question
@@ -149,7 +157,7 @@ Answer + Source Documents
 
 ---
 
-## 🛡️ Anti Hallucination
+## Anti Hallucination
 
 LLM hanya menjawab berdasarkan konteks dokumen. Jika informasi tidak ditemukan:
 
@@ -157,7 +165,7 @@ LLM hanya menjawab berdasarkan konteks dokumen. Jika informasi tidak ditemukan:
 
 ---
 
-## 📊 Statistik Ingest
+## Statistik Ingest
 
 | Metrik                | Nilai |
 |-----------------------|-------|
@@ -168,8 +176,9 @@ LLM hanya menjawab berdasarkan konteks dokumen. Jika informasi tidak ditemukan:
 
 ---
 
-## 📝 Catatan
+## Catatan
 
-- `config.py` menentukan model embedding, LLM, dan parameter retrieval
-- `chroma_db/` sudah berisi hasil ingest — tidak perlu re-ingest kecuali PDF berubah
-- Frontend Vite mem-proxy `/api` ke backend FastAPI di port 8000
+- `config.py` menentukan model embedding, LLM, dan parameter retrieval (`TOP_K`).
+- Variabel seperti `PDF_PATH`, `CHUNK_SIZE`, dan `CHUNK_OVERLAP` di dalam `config.py` saat ini hanya berfungsi sebagai **catatan referensi**. Proses pemotongan teks secara teknis menggunakan parameter bawaan di `chunker.py` dan `ingest.py`.
+- `chroma_db/` sudah berisi hasil ingest — tidak perlu re-ingest kecuali PDF berubah.
+- Frontend Vite mem-proxy `/api` ke backend FastAPI di port 8000.
