@@ -3,15 +3,7 @@
     <div class="welcome-content">
       <div class="welcome-icon">
         <!-- Book Open Icon -->
-        <svg class="icon-main" viewBox="0 0 80 80" fill="none">
-          <rect x="10" y="12" width="26" height="56" rx="2" fill="var(--primary-navy)" stroke="var(--primary-navy-dark)" stroke-width="1.5"/>
-          <rect x="44" y="12" width="26" height="56" rx="2" fill="var(--primary-navy)" stroke="var(--primary-navy-dark)" stroke-width="1.5"/>
-          <path d="M10 20 L36 28 L36 62 L10 54 Z" fill="rgba(255,255,255,0.15)"/>
-          <path d="M44 28 L70 20 L70 54 L44 62 Z" fill="rgba(255,255,255,0.15)"/>
-          <line x1="36" y1="28" x2="36" y2="62" stroke="var(--accent-gold)" stroke-width="2"/>
-          <line x1="44" y1="28" x2="44" y2="62" stroke="var(--accent-gold)" stroke-width="2"/>
-          <circle cx="40" cy="24" r="4" fill="var(--accent-gold)"/>
-        </svg>
+        <img class="icon-main" src="/UNISSULA - Utama.png" alt="Logo UNISSULA" />
       </div>
       <h1 class="welcome-title">Panduan Tugas Akhir</h1>
       <p class="welcome-subtitle">Teknik Informatika UNISSULA</p>

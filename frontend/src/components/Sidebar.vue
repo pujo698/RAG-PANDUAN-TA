@@ -4,15 +4,7 @@
     <div class="sidebar-header">
       <div class="sidebar-logo">
         <!-- Book Icon -->
-        <svg class="logo-icon" viewBox="0 0 64 64" fill="none">
-          <rect x="8" y="8" width="48" height="48" rx="4" fill="rgba(255,255,255,0.1)" stroke="rgba(255,255,255,0.3)" stroke-width="2"/>
-          <path d="M20 16h24v6H20z" fill="var(--accent-gold)"/>
-          <line x1="20" y1="28" x2="44" y2="28" stroke="rgba(255,255,255,0.5)" stroke-width="2"/>
-          <line x1="20" y1="34" x2="40" y2="34" stroke="rgba(255,255,255,0.5)" stroke-width="2"/>
-          <line x1="20" y1="40" x2="42" y2="40" stroke="rgba(255,255,255,0.5)" stroke-width="2"/>
-          <line x1="20" y1="46" x2="36" y2="46" stroke="rgba(255,255,255,0.5)" stroke-width="2"/>
-          <line x1="32" y1="8" x2="32" y2="56" stroke="rgba(255,255,255,0.2)" stroke-width="1"/>
-        </svg>
+        <img class="logo-icon" src="/UNISSULA - Utama.png" alt="Logo UNISSULA" />
       </div>
       <h2 class="sidebar-title">Panduan TA</h2>
       <p class="sidebar-subtitle">Teknik Informatika</p>
