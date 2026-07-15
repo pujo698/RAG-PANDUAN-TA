@@ -6,8 +6,10 @@
     <!-- Sidebar -->
     <Sidebar
       class="app-sidebar"
+      :current-view="currentView"
       @select-topic="handleSendMessage"
       @clear-chat="handleClearChat"
+      @change-view="(v) => { currentView = v; isSidebarOpen = false }"
     />
 
     <!-- Main Content -->
@@ -22,14 +24,18 @@
 
       <!-- Chat Area -->
       <ChatArea
+        v-if="currentView === 'chat'"
         :messages="messages"
         :is-loading="isLoading"
         :has-started="hasStarted"
         @send-message="handleSendMessage"
       />
 
+      <!-- Dashboard Area -->
+      <Dashboard v-else-if="currentView === 'dashboard'" />
+
       <!-- Input Area -->
-      <div class="input-area">
+      <div class="input-area" v-if="currentView === 'chat'">
         <div class="input-container">
           <input
             v-model="inputText"
@@ -62,10 +68,12 @@ import { ref } from 'vue'
 import { useChat } from './composables/useChat.js'
 import Sidebar from './components/Sidebar.vue'
 import ChatArea from './components/ChatArea.vue'
+import Dashboard from './components/Dashboard.vue'
 
 const { messages, isLoading, hasStarted, sendMessage, clearChat } = useChat()
 const inputText = ref('')
 const isSidebarOpen = ref(false)
+const currentView = ref('chat')
 
 function handleSendMessage(text) {
   const msg = typeof text === 'string' ? text : inputText.value
@@ -79,6 +87,7 @@ function handleClearChat() {
   clearChat()
   inputText.value = ''
   isSidebarOpen.value = false
+  currentView.value = 'chat'
 }
 </script>
 

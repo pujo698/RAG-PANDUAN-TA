@@ -17,9 +17,14 @@
 
     <!-- Action Buttons -->
     <div class="sidebar-actions">
-      <button class="btn-new-chat" @click="$emit('clearChat')">
+      <button class="btn-nav" :class="{ active: currentView === 'chat' }" @click="$emit('clearChat'); $emit('changeView', 'chat')">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/></svg>
         <span>Chat Baru</span>
+      </button>
+      
+      <button class="btn-nav mt-2" :class="{ active: currentView === 'dashboard' }" @click="$emit('changeView', 'dashboard')">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg>
+        <span>Dashboard Evaluasi</span>
       </button>
     </div>
 
@@ -33,7 +38,13 @@
 </template>
 
 <script setup>
-defineEmits(['selectTopic', 'clearChat'])
+defineProps({
+  currentView: {
+    type: String,
+    default: 'chat'
+  }
+})
+defineEmits(['selectTopic', 'clearChat', 'changeView'])
 </script>
 
 <style scoped>
@@ -161,7 +172,7 @@ defineEmits(['selectTopic', 'clearChat'])
   margin-top: auto;
 }
 
-.btn-new-chat {
+.btn-nav {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -179,21 +190,27 @@ defineEmits(['selectTopic', 'clearChat'])
   transition: all var(--transition);
 }
 
-.btn-new-chat:hover {
+.btn-nav:hover, .btn-nav.active {
   background: var(--accent-gold);
   border-color: var(--accent-gold);
   color: var(--primary-navy-dark);
-  transform: translateY(-1px);
+}
+
+.btn-nav.active {
   box-shadow: 0 4px 12px rgba(196, 155, 44, 0.3);
 }
 
-.btn-new-chat:hover svg {
+.btn-nav:hover svg, .btn-nav.active svg {
   color: var(--primary-navy-dark);
 }
 
-.btn-new-chat svg {
+.btn-nav svg {
   width: 16px;
   height: 16px;
+}
+
+.mt-2 {
+  margin-top: 8px;
 }
 
 .sidebar-footer {
