@@ -40,6 +40,7 @@ class SourceDoc(BaseModel):
     chapter: str
     section: str
     content_type: str
+    score: float = 0.0
 
 
 class ChatResponse(BaseModel):
@@ -69,6 +70,7 @@ async def chat(request: ChatRequest):
 
     try:
         result = query_rag(request.question)
+        scores = result.get("scores", [0.0] * len(result["source_documents"]))
         return ChatResponse(
             answer=result["answer"],
             sources=[
@@ -78,8 +80,9 @@ async def chat(request: ChatRequest):
                     chapter=doc.metadata.get("chapter", ""),
                     section=doc.metadata.get("section", ""),
                     content_type=doc.metadata.get("content_type", ""),
+                    score=scores[i] if i < len(scores) else 0.0,
                 )
-                for doc in result["source_documents"]
+                for i, doc in enumerate(result["source_documents"])
             ],
         )
     except Exception as e:

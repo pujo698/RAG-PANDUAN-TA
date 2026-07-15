@@ -68,17 +68,30 @@ def query_rag(question: str) -> dict:
         dict with keys:
             - "answer": LLM-generated answer
             - "source_documents": List of LangChain Document objects
+            - "scores": List of float (relevance scores, 0-1)
     """
-    # Step 1: Retrieve relevant chunks
+    # Step 1: Retrieve relevant chunks with scores
     vectorstore = _get_vectorstore()
-    retrieved_docs = vectorstore.similarity_search(question, k=TOP_K)
-    logger.info(f"Retrieved {len(retrieved_docs)} docs for: '{question[:80]}...'")
+    results_with_scores = vectorstore.similarity_search_with_score(question, k=TOP_K)
+    logger.info(f"Retrieved {len(results_with_scores)} docs for: '{question[:80]}...'")
 
-    if not retrieved_docs:
+    if not results_with_scores:
         return {
             "answer": "Maaf, tidak ditemukan informasi yang relevan dalam Buku Panduan Tugas Akhir.",
             "source_documents": [],
+            "scores": [],
         }
+
+    # Unpack documents and scores
+    # ChromaDB returns L2 distance (lower = more similar)
+    # Convert to relevance score: 1.0 = perfect match, 0.0 = unrelated
+    retrieved_docs = []
+    scores = []
+    for doc, distance in results_with_scores:
+        retrieved_docs.append(doc)
+        # Normalize: typical L2 distance for normalized embeddings ranges 0-2
+        relevance = max(0.0, 1.0 - (distance / 2.0))
+        scores.append(round(relevance, 4))
 
     # Step 2: Build context from retrieved chunks
     context = _build_context(retrieved_docs)
@@ -103,6 +116,7 @@ def query_rag(question: str) -> dict:
     return {
         "answer": answer,
         "source_documents": retrieved_docs,
+        "scores": scores,
     }
 
 

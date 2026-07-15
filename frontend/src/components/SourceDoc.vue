@@ -12,16 +12,28 @@
           :key="index"
           class="source-item"
         >
-          <div class="source-header">
+          <div class="source-header" @click="toggleItem(index)">
             <span class="source-page">
               <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
-              Halaman {{ source.page || '?' }}
+              <template v-if="source.chapter">
+                {{ source.chapter }}
+                <template v-if="source.section && source.section !== 'undefined'"> - {{ source.section }}</template>
+                (Hal. {{ source.page || '?' }})
+              </template>
+              <template v-else>
+                Halaman {{ source.page || '?' }}
+              </template>
             </span>
-            <span class="source-relevance">
-              {{ Math.round((source.score || 0.7) * 100) }}% relevan
-            </span>
+            <div class="header-right">
+              <span class="source-relevance">
+                {{ Math.round((source.score || 0.0) * 100) }}% relevan
+              </span>
+              <svg class="item-chevron" :class="{ open: expandedIndex === index }" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+            </div>
           </div>
-          <p class="source-content">{{ source.content }}</p>
+          <div v-show="expandedIndex === index" class="source-body">
+            <p class="source-content">{{ source.content }}</p>
+          </div>
         </div>
       </div>
     </Transition>
@@ -39,6 +51,11 @@ defineProps({
 })
 
 const isOpen = ref(false)
+const expandedIndex = ref(null)
+
+const toggleItem = (index) => {
+  expandedIndex.value = expandedIndex.value === index ? null : index
+}
 </script>
 
 <style scoped>
@@ -99,7 +116,34 @@ const isOpen = ref(false)
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 6px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.item-chevron {
+  color: var(--text-light);
+  transition: transform 0.3s ease;
+}
+
+.item-chevron.open {
+  transform: rotate(180deg);
+}
+
+.source-body {
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px dashed var(--border-light);
+}
+
+.source-meta {
+  margin-bottom: 8px;
+  display: flex;
 }
 
 .source-page {
@@ -127,10 +171,7 @@ const isOpen = ref(false)
   font-size: 0.78rem;
   color: var(--text-secondary);
   line-height: 1.5;
-  display: -webkit-box;
-  -webkit-line-clamp: 4;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
+  white-space: pre-wrap;
 }
 
 .source-enter-active,
