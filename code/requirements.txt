@@ -1,11 +1,36 @@
-docling>=2.100.0
-langchain>=1.3.0
-langchain-core>=1.4.0
-langchain-text-splitters>=1.1.0
-langchain-huggingface>=1.2.0
-langchain-chroma>=1.1.0
-langchain-community>=0.4.0
-chromadb>=1.3.0
-sentence-transformers>=5.0.0
-transformers>=5.0.0
-torch>=2.0.0
+# =============================================================================
+# RAG Panduan TA — Python Dependencies
+# =============================================================================
+# Instalasi: pip install -r requirements.txt
+#
+# Untuk ingest PDF (parsing + re-chunking + re-embedding):
+#   pip install docling>=2.100.0
+#   (docling tidak disertakan di bawah karena ukurannya besar dan hanya
+#    diperlukan saat ingest — chroma_db/ sudah tersedia di repo)
+# =============================================================================
+
+# ── PDF Parsing (hanya untuk ingest) ──
+# docling>=2.100.0              # Uncomment jika ingin re-ingest PDF
+
+# ── LangChain Ecosystem ──
+langchain==1.3.13
+langchain-core==1.4.9
+langchain-text-splitters==1.1.2
+langchain-huggingface==1.2.2
+langchain-chroma==1.1.0
+langchain-community==0.4.2
+langchain-classic==1.0.8
+langchain-ollama==1.1.0
+langchain-protocol==0.0.18
+
+# ── Web API ──
+fastapi==0.139.0
+uvicorn==0.51.0
+
+# ── Vector Database ──
+chromadb==1.5.9
+
+# ── Embedding & ML ──
+sentence-transformers==5.6.0
+transformers==5.13.1
+torch==2.13.0

@@ -7,14 +7,15 @@ Only page_content is embedded; metadata is NOT embedded.
 
 from langchain_huggingface import HuggingFaceEmbeddings
 
+from config import EMBEDDING_MODEL, EMBEDDING_DEVICE, EMBEDDING_NORMALIZE
 from utils import setup_logger
 
 logger = setup_logger("embedder")
 
-# Model configuration
-MODEL_NAME = "BAAI/bge-m3"
-MODEL_KWARGS = {"device": "cuda"}  # Use CPU; change to "cuda" if GPU available
-ENCODE_KWARGS = {"normalize_embeddings": True}  # BGE models benefit from normalization
+# Model configuration (from config.py)
+MODEL_NAME = EMBEDDING_MODEL
+MODEL_KWARGS = {"device": EMBEDDING_DEVICE}
+ENCODE_KWARGS = {"normalize_embeddings": EMBEDDING_NORMALIZE}
 
 
 def get_embedding_model() -> HuggingFaceEmbeddings:
